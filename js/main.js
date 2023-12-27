@@ -87,23 +87,24 @@ function deleteweb(i) {
 }
 
 var searchInput = document.getElementById('searchInput');
-
 function search() {
+    trs = ``;
 
-    trs = ``
+
     for (var i = 0; i < bookmarklist.length; i++) {
-
         if (bookmarklist[i].name.toLowerCase().includes(searchInput.value.toLowerCase())) {
+            var highlightedName = bookmarklist[i].name.replace(new RegExp(searchInput.value, 'gi'), match => `<span class="text-bg-warning">${match}</span>`);
 
             trs += `
-    <tr>
-    <td>${i+1}</td>
-    <td>${bookmarklist[i].name.replace(searchInput.value,`<span class="text-bg-warning">${searchInput.value}</span>`)}</td>
-    <td><button class="btn btn-visit"><a class="text-decoration-none text-white" href="${bookmarklist[i].URL}"  target="_blank">visit</a></button></td>
-    <td><button onclick="deleteweb(${i})"  class="btn btn-delete">Delete</button></td> 
-  </tr>
-    `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${highlightedName}</td>
+                    <td><button class="btn btn-visit"><a class="text-decoration-none text-white" href="${bookmarklist[i].URL}" target="_blank">visit</a></button></td>
+                    <td><button onclick="deleteweb(${i})" class="btn btn-delete">Delete</button></td>
+                </tr>
+            `;
         }
     }
+
     document.getElementById('tableContent').innerHTML = trs;
 }
